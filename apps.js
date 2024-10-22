@@ -1,23 +1,19 @@
 import "./index.css";
 import "./general.css";
 import { MdDelete } from "react-icons/md";
+// import { SlCalender } from "react-icons/sl";
+
+// import { RiDeleteBin5Line } from "react-icons/ri";
+
 import CurrentDateInfo from "./Date.js";
 import { useState } from "react";
-import { GoTasklist } from "react-icons/go";
-import { FaTasks } from "react-icons/fa";
 
 export default function App() {
-  // Initialize the state with TaskItem
-  const [tasks, setTasks] = useState(TaskItem);
+  const [task, setTask] = useState(TaskItem);
 
   function handleDeleteItem(id) {
-    setTasks((tasks) => tasks.filter((task) => task.id !== id));
+    setTask((tasks) => tasks.filter((task) => task.id !== id));
   }
-
-  function handleAddTask(task) {
-    setTasks((tasks) => [...tasks, task]);
-  }
-
   return (
     <>
       <div className="app">
@@ -41,11 +37,7 @@ export default function App() {
           </ul>
         </header>
         <Navbar />
-        <Task
-          tasks={tasks}
-          onDelete={handleDeleteItem}
-          onAddTask={handleAddTask}
-        />
+        <Task onDelete={handleDeleteItem} />
       </div>
     </>
   );
@@ -66,7 +58,7 @@ function Navbar() {
             + New task
           </a>
         </div>
-        <div className="activity-container">
+        <div className="activity-container" s>
           <ul className="activity-list">
             <li className="task-list">
               <a href="#" className="task-item">
@@ -100,7 +92,6 @@ function Navbar() {
   );
 }
 
-// Sample task items
 const TaskItem = [
   {
     id: 1,
@@ -109,72 +100,56 @@ const TaskItem = [
   },
   {
     id: 2,
-    activity: "Crypto Wallet Redesign",
-    time: "01:00pm - 03.30pm",
+    activity: "Client Review & Feedback",
+    time: "09:15am - 12.00pm",
   },
   {
     id: 3,
-    activity: "Create Wireframe",
-    time: "04:00pm - 06.00pm",
+    activity: "Client Review & Feedback",
+    time: "09:15am - 12.00pm",
   },
 ];
 
-function Task({ tasks, onDelete, onAddTask }) {
-  const [activity, setActivity] = useState("");
-  const [timeTo, setTimeTo] = useState("");
-  const [timeFrom, setTimeFrom] = useState("");
+const Tasks = TaskItem;
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!activity || !timeFrom || !timeTo) return;
-    const time = `${timeFrom} -${timeTo}`;
-    const newTask = { activity, time, id: Date.now() };
-    onAddTask(newTask);
-    setActivity("");
-    setTimeFrom("");
-    setTimeTo("");
-  }
+function Task({ onDelete }) {
   return (
     <section className="task-card">
       <div className="card-container">
         <h3>Daily To-Do</h3>
+        {/* <RiDeleteBin5Line />
+        <SlCalender /> */}
         <p>Today</p>
         <ul>
-          {tasks.map((task) => (
-            <Tasker
-              taskobj={task}
-              key={task.id}
-              onDelete={onDelete}
-              onAddTask={onAddTask}
-            />
+          {TaskItem.map((task) => (
+            <Tasker taskobj={task} key={task.id} onDelete={onDelete} />
           ))}
-        </ul>
 
+          {/* <li className="check-list">
+            <input type="checkbox" />
+            <p>Client Review & Feedback</p>
+
+            <span className="del">
+              <MdDelete />
+            </span>
+          </li>
+          <li className="check-list">
+            <input type="checkbox" />
+            <p>Crypto Wallet Redesign</p>
+            <span className="del">🗑️</span>
+          </li>
+          <li className="check-list">
+            <input type="checkbox" />
+            <p>Create Wireframe</p>
+            <span className="del">🗑️</span>
+          </li>
+          <li>
+            <span>today 09:11am - 10:45pm</span>
+          </li> */}
+        </ul>
+        <input type="text" placeholder="+ add new task" />{" "}
         <span>
-          <form action="" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="AddTask..."
-              value={activity}
-              onChange={(e) => setActivity(e.target.value)}
-            />
-            <input
-              type="time"
-              placeholder="From"
-              value={timeFrom}
-              onChange={(e) => setTimeFrom(e.target.value)}
-            />
-            <label htmlFor="">Today</label>
-            <input
-              type="time"
-              placeholder="To"
-              value={timeTo}
-              onChange={(e) => setTimeTo(e.target.value)}
-            />
-          </form>
-          <button type="submit" onClick={handleSubmit}>
-            Add Task
-          </button>
+          <button href="">add task </button>
         </span>
       </div>
     </section>
